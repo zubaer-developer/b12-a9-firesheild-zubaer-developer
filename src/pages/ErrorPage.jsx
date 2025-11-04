@@ -5,9 +5,9 @@ const ErrorPage = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
       {/* page title */}
-      <title>Error-Page😢</title>
+      <title>Error-Page</title>
       <div>
-        <img width={500} height={500} src={error_img} alt="" />
+        <img className=" w-[100%] h-dvh" src={error_img} alt="" />
         <div className="flex justify-center">
           <NavLink
             to={"/"}
