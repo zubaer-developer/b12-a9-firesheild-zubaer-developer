@@ -1,6 +1,7 @@
 import React from "react";
 import Banner from "../components/Banner";
 import PopularGames from "../components/PopularGames";
+import NewsLetter from "../components/NewsLetter";
 
 const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = () => {
       <PopularGames></PopularGames>
 
       {/* NewsLetter Section */}
+      <NewsLetter></NewsLetter>
     </div>
   );
 };
