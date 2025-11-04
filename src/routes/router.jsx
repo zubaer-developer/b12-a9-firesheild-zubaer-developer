@@ -12,6 +12,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage></HomePage>,
+        loader: () => fetch("/data.json"),
       },
     ],
   },
