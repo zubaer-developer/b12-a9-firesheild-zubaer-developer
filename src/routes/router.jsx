@@ -4,6 +4,7 @@ import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
 import About from "../pages/about";
 import Contact from "../pages/contact";
+import GamesDetail from "../pages/GamesDetail";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,11 @@ export const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/gamesDetail/:id",
+        element: <GamesDetail></GamesDetail>,
+        loader: () => fetch("/data.json"),
       },
     ],
   },

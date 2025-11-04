@@ -1,7 +1,8 @@
 import { NavLink, useLoaderData } from "react-router";
+import { motion } from "framer-motion";
 
 const PopularGames = () => {
-  const kidsData = useLoaderData();
+  const gamesData = useLoaderData();
 
   return (
     <div data-aos="fade-up" className="max-w-7xl mx-auto px-4 py-16">
@@ -12,7 +13,7 @@ const PopularGames = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {kidsData.slice(0, 8).map((game) => (
+        {gamesData.slice(0, 8).map((game) => (
           <div key={game.id} className="bg-white p-4 rounded-lg shadow-md">
             <img
               src={game.coverPhoto}
@@ -31,7 +32,7 @@ const PopularGames = () => {
               <p className="text-sm text-gray-600">Dev: {game.developer}</p>
             </div>
             <NavLink
-              to={`/game-Details-page/${game.id}`}
+              to={`/gamesDetail/${game.id}`}
               className="w-full h-10 flex justify-center items-center font-bold mt-4 bg-emerald-500 text-white py-2 rounded-lg hover:bg-emerald-600 transition-colors"
             >
               View More
