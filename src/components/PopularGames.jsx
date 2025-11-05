@@ -1,5 +1,4 @@
 import { NavLink, useLoaderData } from "react-router";
-import { motion } from "framer-motion";
 
 const PopularGames = () => {
   const gamesData = useLoaderData();
