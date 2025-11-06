@@ -9,6 +9,7 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import ForgetPassword from "../pages/forgetPassword";
 import Profile from "../pages/Profile";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +32,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/gamesDetail/:id",
-        element: <GamesDetail></GamesDetail>,
+        element: (
+          <ProtectedRoute>
+            <GamesDetail></GamesDetail>
+          </ProtectedRoute>
+        ),
         loader: () => fetch("/data.json"),
       },
       {
@@ -44,11 +49,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/forgetpassword",
-        element: <ForgetPassword></ForgetPassword>,
+        element: (
+          <ProtectedRoute>
+            <ForgetPassword></ForgetPassword>
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/profile",
-        element: <Profile></Profile>,
+        element: (
+          <ProtectedRoute>
+            <Profile></Profile>
+          </ProtectedRoute>
+        ),
       },
     ],
   },

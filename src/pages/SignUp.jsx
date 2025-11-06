@@ -1,14 +1,33 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+// import { AuthContext } from "../contexts/AuthContext";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
 
 const SignUp = () => {
+  //   const { signUpUser } = use(AuthContext);
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const name = event.target.name.value;
+    const photo = event.target.PhotoUrl.value;
+    console.log(email, password, name, photo);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
             <h1 className="text-5xl font-bold">SignUp now!</h1>
-            <form>
+            <form onSubmit={handleSignUp}>
               <fieldset className="fieldset">
                 {/* Name */}
                 <label className="label">Name</label>
@@ -19,12 +38,12 @@ const SignUp = () => {
                   placeholder="Name"
                 />
                 {/* Profile URL */}
-                <label className="label">Profile URL</label>
+                <label className="label">Photo URL</label>
                 <input
-                  name="profileUrl"
+                  name="PhotoUrl"
                   type="text"
                   className="input"
-                  placeholder="Profile URL"
+                  placeholder="Photo URL"
                 />
                 {/* Email */}
                 <label className="label">Email</label>

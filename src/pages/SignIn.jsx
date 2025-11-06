@@ -1,18 +1,48 @@
 //
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
+import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { FaEye } from "react-icons/fa";
+import { IoEyeOff } from "react-icons/io5";
 
 const SignIn = () => {
-  const { signInUser } = use(AuthContext);
+  const [show, setShow] = useState(false);
+  const { signInUser, signInGoogle } = use(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const handleSignIn = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     console.log(email, password);
-    signInUser(email, password);
+    signInUser(email, password)
+      .then((res) => {
+        console.log(res.user);
+        toast.success("GoogleSignIn successful");
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
   };
-
+  const handleGoogleSignIn = () => {
+    signInGoogle()
+      .then((res) => {
+        console.log(res.user);
+        toast.success("GoogleSignIn successful");
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast.error(error.message);
+      });
+  };
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -30,13 +60,24 @@ const SignIn = () => {
                   placeholder="Email"
                 />
                 {/* Password */}
-                <label className="label">Password</label>
-                <input
-                  name="password"
-                  type="password"
-                  className="input"
-                  placeholder="Password"
-                />
+                <div className="relative">
+                  <label className="block text-sm mb-1  text-white font-bold text-[17px]">
+                    Password
+                  </label>
+                  <input
+                    type={show ? "text" : "password"}
+                    name="password"
+                    placeholder="••••••••"
+                    required
+                    className="input input-bordered w-full "
+                  />
+                  <span
+                    onClick={() => setShow(!show)}
+                    className="absolute right-2 top-11 cursor-pointer z-50"
+                  >
+                    {show ? <IoEyeOff /> : <FaEye />}
+                  </span>
+                </div>
                 <div>
                   <a className="link link-hover">Forgot password?</a>
                 </div>
@@ -45,7 +86,7 @@ const SignIn = () => {
             </form>
             {/* Google Signin */}
             <button
-              onClick={handleWithGoogleSignIn}
+              onClick={handleGoogleSignIn}
               type="button"
               className="flex items-center justify-center gap-3 bg-gray-300 text-gray-800 px-5 py-2  w-full font-semibold hover:bg-gray-100 cursor-pointer"
             >

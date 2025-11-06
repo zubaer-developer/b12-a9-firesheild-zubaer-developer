@@ -1,9 +1,18 @@
-// import React, { use } from "react";
+import React, { use } from "react";
 import { NavLink } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
+import "./Navbar.css";
 
 const Navbar = () => {
-  // const { user } = use(AuthContext);
+  const { user, signOutUser } = use(AuthContext);
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const links = (
     <>
@@ -16,9 +25,11 @@ const Navbar = () => {
       <li>
         <NavLink to={"/contact"}>Contact Us</NavLink>
       </li>
-      <li>
-        <NavLink to={"/profile"}>My Profile</NavLink>
-      </li>
+      {user && (
+        <li>
+          <NavLink to={"/profile"}>My Profile</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -57,12 +68,37 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end flex gap-5">
-        <NavLink className="btn" to="/signin">
-          Sign In
-        </NavLink>
-        <NavLink className="btn" to="/signup">
-          Sign Up
-        </NavLink>
+        {/* Show this if user is signed in */}
+        {user ? (
+          <div className="flex items-center gap-3">
+            <NavLink to="/profile">
+              <img
+                src={
+                  user?.photoURL ||
+                  "https://img.icons8.com/?size=100&id=2952&format=png"
+                }
+                alt="User"
+                className="h-10 w-10 rounded-full border-2 border-purple-500 object-cover"
+              />
+            </NavLink>
+            <button
+              onClick={handleSignOut}
+              className="btn btn-sm bg-purple-500 text-white"
+            >
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          // Show this if user is NOT signed in
+          <>
+            <NavLink className="btn btn-sm" to="/signin">
+              Sign In
+            </NavLink>
+            <NavLink className="btn btn-sm" to="/signup">
+              Sign Up
+            </NavLink>
+          </>
+        )}
       </div>
       {/* <div className="navbar-end">
         {loading ? (
