@@ -1,85 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import superMario from "../assets/Super Mario.jpg";
 import chese from "../assets/chese.jpg";
 import ludo from "../assets/ludo.jpg";
 import tableTenis from "../assets/table-tenis.jpg";
 
 const Banner = () => {
+  const images = [superMario, chese, ludo, tableTenis];
+  const [current, setCurrent] = useState(0);
+
+  // Auto slide forward continuously every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
     <div
       data-aos="fade-up"
       data-aos-anchor-placement="center-bottom"
-      className="max-w-7xl mx-auto"
+      className="max-w-7xl mx-auto mt-10"
     >
-      <div className="md:w-[100%] relative mt-10 md:mt-0">
-        <div className="carousel w-full h-[400px] rounded-xl overflow-hidden">
-          {/* Slide 1 */}
-          <div id="slide1" className="carousel-item relative w-full">
+      <div className="w-full h-[400px] rounded-xl overflow-hidden relative mt-10 md:mt-0">
+        {/* Carousel Wrapper */}
+        <div
+          className="flex transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {images.map((img, index) => (
             <img
-              src={superMario}
-              className="w-full h-full object-cover"
-              alt="Educational Toy"
+              key={index}
+              src={img}
+              alt={`Slide ${index + 1}`}
+              className="w-full flex-shrink-0 h-[400px] object-cover"
             />
-            <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
-              <a href="#slide6" className="btn btn-circle">
-                ❮
-              </a>
-              <a href="#slide2" className="btn btn-circle">
-                ❯
-              </a>
-            </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Slide 2 */}
-          <div id="slide2" className="carousel-item relative w-full">
-            <img
-              src={chese}
-              className="w-full h-full object-cover"
-              alt="Fun Toy"
-            />
-            <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
-              <a href="#slide1" className="btn btn-circle">
-                ❮
-              </a>
-              <a href="#slide3" className="btn btn-circle">
-                ❯
-              </a>
-            </div>
-          </div>
-
-          {/* Slide 3 */}
-          <div id="slide3" className="carousel-item relative w-full">
-            <img
-              src={ludo}
-              className="w-full h-full object-cover"
-              alt="Creative Toy"
-            />
-            <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
-              <a href="#slide2" className="btn btn-circle">
-                ❮
-              </a>
-              <a href="#slide4" className="btn btn-circle">
-                ❯
-              </a>
-            </div>
-          </div>
-
-          {/* Slide 4 */}
-          <div id="slide4" className="carousel-item relative w-full">
-            <img
-              src={tableTenis}
-              className="w-full h-full object-cover"
-              alt="Creative Toy"
-            />
-            <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
-              <a href="#slide3" className="btn btn-circle">
-                ❮
-              </a>
-              <a href="#slide5" className="btn btn-circle">
-                ❯
-              </a>
-            </div>
-          </div>
+        {/* Dots Indicator */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+          {images.map((_, i) => (
+            <div
+              key={i}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                i === current ? "bg-white scale-125" : "bg-gray-400"
+              }`}
+            ></div>
+          ))}
         </div>
       </div>
     </div>
