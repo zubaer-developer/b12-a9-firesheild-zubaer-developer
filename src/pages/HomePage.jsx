@@ -6,7 +6,7 @@ import NewsLetter from "../components/NewsLetter";
 const HomePage = () => {
   return (
     <div>
-      <title>Home-Page</title>
+      <title>Game Hub</title>
       {/* Banner Section */}
       <Banner></Banner>
 

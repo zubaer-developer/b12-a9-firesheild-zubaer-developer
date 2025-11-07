@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 const About = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 flex flex-col items-center justify-center p-6">
+      <title>About Us</title>
+
       <motion.h1
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

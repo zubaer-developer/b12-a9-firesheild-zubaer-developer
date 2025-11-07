@@ -10,6 +10,7 @@ import SignUp from "../pages/SignUp";
 import ForgetPassword from "../pages/forgetPassword";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
+import AllGames from "../pages/AllGames";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,11 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage></HomePage>,
+        loader: () => fetch("/data.json"),
+      },
+      {
+        path: "/allgames",
+        element: <AllGames></AllGames>,
         loader: () => fetch("/data.json"),
       },
       {
