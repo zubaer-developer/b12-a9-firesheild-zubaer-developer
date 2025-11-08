@@ -11,9 +11,9 @@ const Footer = () => {
   return (
     <div>
       <footer className="bg-gray-900 text-gray-300 py-10 mt-10 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-30">
           {/* Column 1 — Brand / About */}
-          <div>
+          <div className="col-span-4">
             <h2 className="text-2xl font-bold text-white mb-3">GameHub</h2>
             <p className="text-sm leading-relaxed">
               GameHub is your ultimate gaming destination — discover, explore,
@@ -22,7 +22,7 @@ const Footer = () => {
           </div>
 
           {/* Column 2 — Quick Links */}
-          <div>
+          <div className="grid col-span-4 justify-center">
             <h3 className="text-lg font-semibold text-white mb-3">
               Quick Links
             </h3>
@@ -54,7 +54,7 @@ const Footer = () => {
           </div>
 
           {/* Column 3 —  Social */}
-          <div>
+          <div className="col-span-4">
             <h3 className="text-lg font-semibold text-white mb-3">
               Stay Updated
             </h3>
