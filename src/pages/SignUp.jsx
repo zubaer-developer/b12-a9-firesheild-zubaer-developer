@@ -1,102 +1,135 @@
-import React, { use, useState } from "react";
-import { Link } from "react-router";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
-  const { signUpUser } = use(AuthContext);
+  const { signUpUser } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
   const handleSignUp = (event) => {
     event.preventDefault();
-    // clear previous error
-    setError("");
-
-    const email = event.target.email.value;
-    const password = event.target.password.value;
     const name = event.target.name.value;
     const photo = event.target.PhotoUrl.value;
-    console.log(email, password, name, photo);
+    const email = event.target.email.value;
+    const password = event.target.password.value;
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 charecters long.");
-      return;
-    }
+    //  Password validation
     if (!/[A-Z]/.test(password)) {
-      setError("Password must include at least one UPPERCASE letter.");
-      return;
+      return setError("Password must contain at least one uppercase letter");
     }
     if (!/[a-z]/.test(password)) {
-      setError("Password must include at least one LOWERCASE letter.");
-      return;
+      return setError("Password must contain at least one lowercase letter");
+    }
+    if (password.length < 6) {
+      return setError("Password must be at least 6 characters long");
     }
 
+    //  Create user
     signUpUser(email, password)
       .then((res) => {
-        console.log(res.user);
-        event.target.reset();
+        const user = res.user;
+        console.log("User created:", user);
+
+        // Update display name & photo URL in Firebase
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL: photo,
+        })
+          .then(() => {
+            toast.success("Sign Up successful ");
+            // redirect to profile page
+            navigate("/profile");
+          })
+          .catch((error) => {
+            console.error("Profile update failed:", error);
+            toast.error("Profile update failed");
+          });
       })
       .catch((error) => {
-        console.log(error.message);
+        console.error("SignUp error:", error.message);
         setError(error.message);
       });
   };
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <title>Sign Up</title>
-
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
           <div className="card-body">
-            <h1 className="text-5xl font-bold">SignUp now!</h1>
-            {/*  Error Message */}
-            {error && (
-              <p className="text-red-500 bg-red-100 p-2 rounded mb-3 text-center font-medium">
-                {error}
-              </p>
-            )}
+            <h1 className="text-4xl font-bold mb-4 text-center text-gray-700">
+              Create Account
+            </h1>
+
             <form onSubmit={handleSignUp}>
-              <fieldset className="fieldset">
+              <fieldset className="fieldset space-y-2">
                 {/* Name */}
-                <label className="label">Name</label>
+                <label className="label font-semibold">Name</label>
                 <input
                   name="name"
                   type="text"
-                  className="input"
-                  placeholder="Name"
+                  className="input input-bordered w-full"
+                  placeholder="Enter your name"
+                  required
                 />
+
                 {/* Profile URL */}
-                <label className="label">Photo URL</label>
+                <label className="label font-semibold">Photo URL</label>
                 <input
                   name="PhotoUrl"
                   type="text"
-                  className="input"
-                  placeholder="Photo URL"
+                  className="input input-bordered w-full"
+                  placeholder="Enter photo URL"
+                  required
                 />
+
                 {/* Email */}
-                <label className="label">Email</label>
+                <label className="label font-semibold">Email</label>
                 <input
                   name="email"
                   type="email"
-                  className="input"
-                  placeholder="Email"
+                  className="input input-bordered w-full"
+                  placeholder="Enter your email"
+                  required
                 />
+
                 {/* Password */}
-                <label className="label">Password</label>
+                <label className="label font-semibold">Password</label>
                 <input
                   name="password"
                   type="password"
-                  className="input"
-                  placeholder="Password"
+                  className="input input-bordered w-full"
+                  placeholder="Enter password"
+                  required
                 />
-                <button className="btn btn-neutral mt-4">SignUp</button>
+
+                {/* Error message */}
+                {error && (
+                  <p className="text-red-500 text-sm mt-2 text-center">
+                    {error}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  className="btn btn-neutral mt-4 w-full font-semibold"
+                >
+                  Sign Up
+                </button>
               </fieldset>
             </form>
-            <p>
-              Already have an account ?
+
+            <p className="mt-4 text-center">
+              Already have an account?
               <Link
-                className="ml-3 text-blue-500 hover:text-blue-800"
+                className="ml-2 text-blue-600 hover:text-blue-800 font-medium"
                 to="/signin"
               >
-                SignIn
+                Sign In
               </Link>
             </p>
           </div>

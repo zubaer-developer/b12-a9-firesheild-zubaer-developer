@@ -9,6 +9,7 @@ import { IoEyeOff } from "react-icons/io5";
 
 const SignIn = () => {
   const [show, setShow] = useState(false);
+  const [email, setEmail] = useState("");
   const { signInUser, signInGoogle } = use(AuthContext);
 
   const navigate = useNavigate();
@@ -60,6 +61,8 @@ const SignIn = () => {
                   type="email"
                   className="input"
                   placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 {/* Password */}
                 <div className="relative">
@@ -81,7 +84,13 @@ const SignIn = () => {
                   </span>
                 </div>
                 <div>
-                  <a className="link link-hover">Forgot password?</a>
+                  <Link
+                    to="/forgetpassword"
+                    state={{ email }}
+                    className="link link-hover text-blue-500"
+                  >
+                    Forgot password?
+                  </Link>
                 </div>
                 <button className="btn btn-neutral mt-4">Login</button>
               </fieldset>

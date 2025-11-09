@@ -33,7 +33,7 @@ const Banner = () => {
               key={index}
               src={img}
               alt={`Slide ${index + 1}`}
-              className="w-full flex-shrink-0 h-[400px] object-cover"
+              className="w-full shrink-0 h-[400px] object-cover"
             />
           ))}
         </div>

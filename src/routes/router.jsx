@@ -11,6 +11,7 @@ import ForgetPassword from "../pages/forgetPassword";
 import Profile from "../pages/Profile";
 import ProtectedRoute from "./ProtectedRoute";
 import AllGames from "../pages/AllGames";
+import UpdateProfile from "../pages/UpdateProfile";
 
 export const router = createBrowserRouter([
   {
@@ -55,17 +56,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "/forgetpassword",
-        element: (
-          <ProtectedRoute>
-            <ForgetPassword></ForgetPassword>
-          </ProtectedRoute>
-        ),
+        element: <ForgetPassword></ForgetPassword>,
       },
       {
         path: "/profile",
         element: (
           <ProtectedRoute>
             <Profile></Profile>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/updateProfile",
+        element: (
+          <ProtectedRoute>
+            <UpdateProfile></UpdateProfile>
           </ProtectedRoute>
         ),
       },
