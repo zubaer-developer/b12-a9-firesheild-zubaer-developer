@@ -9,7 +9,7 @@ It features user authentication (sign up, sign in, Google login), a user profile
 
 ### Live Demo
 
-**Live URL:**
+**Live URL:** [https://game-hub-zubaer.netlify.app/](https://game-hub-zubaer.netlify.app/)
 
 ---
 
