@@ -78,7 +78,7 @@ const Navbar = () => {
           <span className="loading loading-spinner text-accent"></span>
         ) : user ? (
           <div className="flex items-center gap-3">
-            <NavLink to="/profile">
+            <NavLink className="flex flex-col items-center" to="/profile">
               <img
                 src={
                   user?.photoURL ||
@@ -87,6 +87,7 @@ const Navbar = () => {
                 alt="User"
                 className="h-10 w-10 rounded-full border-2 border-purple-500 object-cover"
               />
+              <p> {user?.displayName} </p>
             </NavLink>
             <button
               onClick={handleSignOut}

@@ -4,8 +4,11 @@ import { AuthContext } from "../contexts/AuthContext";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import { toast } from "react-toastify";
+import { IoEyeOff } from "react-icons/io5";
+import { FaEye } from "react-icons/fa";
 
 const SignUp = () => {
+  const [show, setShow] = useState(false);
   const { signUpUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -98,14 +101,24 @@ const SignUp = () => {
                 />
 
                 {/* Password */}
-                <label className="label font-semibold">Password</label>
-                <input
-                  name="password"
-                  type="password"
-                  className="input input-bordered w-full"
-                  placeholder="Enter password"
-                  required
-                />
+                <div className="relative">
+                  <label className="block text-sm mb-1  text-white font-bold text-[17px]">
+                    Password
+                  </label>
+                  <input
+                    type={show ? "text" : "password"}
+                    name="password"
+                    placeholder="••••••••"
+                    required
+                    className="input input-bordered w-full "
+                  />
+                  <span
+                    onClick={() => setShow(!show)}
+                    className="absolute right-2 top-11 cursor-pointer z-50"
+                  >
+                    {show ? <IoEyeOff /> : <FaEye />}
+                  </span>
+                </div>
 
                 {/* Error message */}
                 {error && (
