@@ -4,7 +4,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const { user, signOutUser } = use(AuthContext);
+  const { user, signOutUser, loading } = use(AuthContext);
 
   const handleSignOut = () => {
     signOutUser()
@@ -74,7 +74,9 @@ const Navbar = () => {
 
       <div className="navbar-end flex gap-5">
         {/* Show this if user is signed in */}
-        {user ? (
+        {loading ? (
+          <span className="loading loading-spinner text-accent"></span>
+        ) : user ? (
           <div className="flex items-center gap-3">
             <NavLink to="/profile">
               <img
@@ -105,54 +107,6 @@ const Navbar = () => {
           </>
         )}
       </div>
-      {/* <div className="navbar-end">
-        {loading ? (
-          <HashLoader color="red" />
-        ) : user ? (
-          <div className="text-center space-y-3">
-            <div className="flex gap-2 items-center">
-              <button
-                className="bg-purple-500 text-white px-4 py-2 rounded-md font-semibold cursor-pointer"
-                popoverTarget="popover-1"
-                style={{ anchorName: "--anchor-1" }}
-              >
-                Profile
-              </button>
-              <img
-                src={
-                  user?.photoURL ||
-                  "https://img.icons8.com/?size=100&id=2952&format=png"
-                }
-                className="h-12 w-12 rounded-full border-2 border-orange-600 object-cover"
-                alt=""
-              />
-            </div>
-
-            <div
-              className="dropdown menu w-52 rounded-box bg-base-100 shadow-sm flex flex-col gap-3"
-              popover="auto"
-              id="popover-1"
-              style={{ positionAnchor: "--anchor-1" }}
-            >
-              <h2 className="text-black text-xl font-semibold">
-                {user?.displayName || "No Name"}
-              </h2>
-              <p className=" font-black">{user?.email || "No Email"}</p>
-
-              <button onClick={handleSignout} className="my-btn">
-                Sign Out
-              </button>
-            </div>
-          </div>
-        ) : (
-          <NavLink
-            to={"/signIn-page"}
-            className="bg-purple-500 text-white px-4 py-2 rounded-md font-semibold cursor-pointer text-center"
-          >
-            Sign in
-          </NavLink>
-        )}
-      </div> */}
     </div>
   );
 };
